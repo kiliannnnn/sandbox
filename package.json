@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@kiliannnnn/calendarize": "file:../calendarize",
+    "@kiliannnnn/fastag": "file:../fastag",
     "@kiliannnnn/lushland": "file:../lushland",
     "@kiliannnnn/qrify": "^1.1.0",
     "fullcalendar-scheduler": "^6.1.15"

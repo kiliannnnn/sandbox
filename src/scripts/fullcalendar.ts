@@ -79,6 +79,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   calendar.addEvent({
     title: createEventElement(formatTime('2025-03-22', getRandomTime()), formatTime('2025-03-27', getRandomTime()), 'SB-ED', 'SB-ED', ''),
+    start: formatTime('2025-03-04', getRandomTime()),
+    end: formatTime('2025-03-27', getRandomTime()), // bug lorsque 26 ou 25
+    allDay: true,
+  });
+
+  calendar.addEvent({
+    title: createEventElement(formatTime('2025-03-22', getRandomTime()), formatTime('2025-03-27', getRandomTime()), 'SB-ED', 'SB-ED', ''),
     start: formatTime('2025-03-22', getRandomTime()),
     end: formatTime('2025-03-27', getRandomTime()),
     allDay: true,
@@ -150,7 +157,15 @@ function applyCustomStyles(info) {
       if (eventStart < weekStart && eventEnd <= weekEnd) { // Event starts before the week and ends within the week
         // do not touch the left side
         // update the width to make it end on the correct day
-        console.log('Event starts before the week');
+        // console.log('Event starts before the week');
+
+        const visibleCount = getVisibleDays(info, eventStart, eventEnd);
+        console.log('visibleCount', visibleCount);
+
+        const right = ((eventEnd.getHours() * 60 + eventEnd.getMinutes()) / 1440) * 100;
+        eventElement.parentElement.style.width = `${visibleCount * 100 - right}%`;
+        eventElement.style.marginLeft = '0';
+        eventElement.style.paddingLeft = '0';
       }
       if (eventStart >= weekStart && eventEnd > weekEnd) { // Event starts within the week and ends after the week
         // do not touch the width
